@@ -1,5 +1,4 @@
 # pedrogouvea-ext.github.io
-[Plantonistas_2026.html](https://github.com/user-attachments/files/24808377/Plantonistas_2026.html)
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
@@ -65,16 +64,9 @@
         .bg-rol { background: #0d47a1; color: #e3f2fd; }
         .bg-baas { background: #4a148c; color: #f3e5f5; }
         .bg-solutis { background: #bf360c; color: #fff3e0; }
-        .bg-pix { background: #008080; color: #e0f2f2; }
-        .bg-arquitetura { background: #607d8b; color: #eceff1; }
-        .bg-infra { background: #455a64; color: #cfd8dc; }
         
         .contact-methods { font-size: 11px; color: #81c784; font-weight: 500; margin-top: 4px; }
         
-        .list-item { margin-bottom: 15px; border-bottom: 1px solid #333; padding-bottom: 10px; }
-        .list-item:last-child { border: none; }
-        .section-title { font-size: 14px; font-weight: bold; color: #90caf9; margin-top: 15px; margin-bottom: 5px; border-bottom: 1px dashed #555; padding-bottom: 3px; }
-
         @keyframes slideUp { from { opacity: 0; transform: translateY(15px); } to { opacity: 1; transform: translateY(0); } }
     </style>
 </head>
@@ -86,22 +78,32 @@
     <div class="form-group">
         <label>Selecione o Sistema:</label>
         <select id="sistemaBusca" onchange="buscar()">
-            <option value="">Escolha...</option>
             <option value="ROL">ROL</option>
             <option value="BAAS">BAAS</option>
             <option value="SOLUTIS">SOLUTIS</option>
-            <option value="PIX">PIX</option>
-            <option value="ARQUITETURA">ARQUITETURA</option>
-            <option value="INFRA">INFRAESTRUTURA</option>
         </select>
     </div>
 
-    <div class="form-group" id="containerData" style="display: none;">
+    <div class="form-group">
         <label>Escolha a Data:</label>
         <input type="date" id="dataBusca" onchange="buscar()">
     </div>
 
-    <div id="resultado" class="result"></div>
+    <div id="resultado" class="result">
+        <div class="info-row">
+            <span class="label-res">Sistema</span>
+            <span id="resBadge" class="badge"></span>
+        </div>
+        <div class="info-row">
+            <span class="label-res">Plantonista Responsável</span>
+            <span id="resNome" class="value-res"></span>
+            <div id="resExtra" class="contact-methods"></div>
+        </div>
+        <div class="info-row">
+            <span class="label-res">Telefone / WhatsApp</span>
+            <span id="resTel" class="value-res" style="color: #81c784;"></span>
+        </div>
+    </div>
 </div>
 
 <script>
@@ -125,37 +127,7 @@
         {start: "2026-05-11", end: "2026-05-17", name: "Gustavo Patricio Silva", phone: "(11) 94265-1594"},
         {start: "2026-05-18", end: "2026-05-24", name: "Kely Caroline", phone: "(11) 97750-3747"},
         {start: "2026-05-25", end: "2026-05-31", name: "Gustavo Patricio Silva", phone: "(11) 94265-1594"},
-        {start: "2026-06-01", end: "2026-06-07", name: "Kely Caroline", phone: "(11) 97750-3747"},
-        {start: "2026-06-08", end: "2026-06-14", name: "Gustavo Patricio Silva", phone: "(11) 94265-1594"},
-        {start: "2026-06-15", end: "2026-06-21", name: "Kely Caroline", phone: "(11) 97750-3747"},
-        {start: "2026-06-22", end: "2026-06-28", name: "Gustavo Patricio Silva", phone: "(11) 94265-1594"},
-        {start: "2026-06-29", end: "2026-07-05", name: "Kely Caroline", phone: "(11) 97750-3747"},
-        {start: "2026-07-06", end: "2026-07-12", name: "Gustavo Patricio Silva", phone: "(11) 94265-1594"},
-        {start: "2026-07-13", end: "2026-07-19", name: "Kely Caroline", phone: "(11) 97750-3747"},
-        {start: "2026-07-20", end: "2026-07-26", name: "Gustavo Patricio Silva", phone: "(11) 94265-1594"},
-        {start: "2026-07-27", end: "2026-08-02", name: "Kely Caroline", phone: "(11) 97750-3747"},
-        {start: "2026-08-03", end: "2026-08-09", name: "Gustavo Patricio Silva", phone: "(11) 94265-1594"},
-        {start: "2026-08-10", end: "2026-08-16", name: "Kely Caroline", phone: "(11) 97750-3747"},
-        {start: "2026-08-17", end: "2026-08-23", name: "Gustavo Patricio Silva", phone: "(11) 94265-1594"},
-        {start: "2026-08-24", end: "2026-08-30", name: "Kely Caroline", phone: "(11) 97750-3747"},
-        {start: "2026-08-31", end: "2026-09-06", name: "Gustavo Patricio Silva", phone: "(11) 94265-1594"},
-        {start: "2026-09-07", end: "2026-09-13", name: "Kely Caroline", phone: "(11) 97750-3747"},
-        {start: "2026-09-14", end: "2026-09-20", name: "Gustavo Patricio Silva", phone: "(11) 94265-1594"},
-        {start: "2026-09-21", end: "2026-09-27", name: "Kely Caroline", phone: "(11) 97750-3747"},
-        {start: "2026-09-28", end: "2026-10-04", name: "Gustavo Patricio Silva", phone: "(11) 94265-1594"},
-        {start: "2026-10-05", end: "2026-10-11", name: "Kely Caroline", phone: "(11) 97750-3747"},
-        {start: "2026-10-12", end: "2026-10-18", name: "Gustavo Patricio Silva", phone: "(11) 94265-1594"},
-        {start: "2026-10-19", end: "2026-10-25", name: "Kely Caroline", phone: "(11) 97750-3747"},
-        {start: "2026-10-26", end: "2026-11-01", name: "Gustavo Patricio Silva", phone: "(11) 94265-1594"},
-        {start: "2026-11-02", end: "2026-11-08", name: "Kely Caroline", phone: "(11) 97750-3747"},
-        {start: "2026-11-09", end: "2026-11-15", name: "Gustavo Patricio Silva", phone: "(11) 94265-1594"},
-        {start: "2026-11-16", end: "2026-11-22", name: "Kely Caroline", phone: "(11) 97750-3747"},
-        {start: "2026-11-23", end: "2026-11-29", name: "Gustavo Patricio Silva", phone: "(11) 94265-1594"},
-        {start: "2026-11-30", end: "2026-12-06", name: "Kely Caroline", phone: "(11) 97750-3747"},
-        {start: "2026-12-07", end: "2026-12-13", name: "Gustavo Patricio Silva", phone: "(11) 94265-1594"},
-        {start: "2026-12-14", end: "2026-12-20", name: "Kely Caroline", phone: "(11) 97750-3747"},
-        {start: "2026-12-21", end: "2026-12-27", name: "Gustavo Patricio Silva", phone: "(11) 94265-1594"},
-        {start: "2026-12-28", end: "2026-12-31", name: "Kely Caroline", phone: "(11) 97750-3747"}
+        {start: "2026-06-01", end: "2026-06-07", name: "Kely Caroline", phone: "(11) 97750-3747"}
     ];
 
     const DADOS_BAAS = [
@@ -182,36 +154,7 @@
         {start: "2026-05-18", end: "2026-05-24", name: "Herbert da Silva", phone: "(11) 98207-7437"},
         {start: "2026-05-25", end: "2026-05-31", name: "Eric Vieira", phone: "(11) 99471-2590"},
         {start: "2026-06-01", end: "2026-06-07", name: "Bruno Wan", phone: "(11) 96458-6006"},
-        {start: "2026-06-08", end: "2026-06-14", name: "Herbert da Silva", phone: "(11) 98207-7437"},
-        {start: "2026-06-15", end: "2026-06-21", name: "Eric Vieira", phone: "(11) 99471-2590"},
-        {start: "2026-06-22", end: "2026-06-28", name: "Bruno Wan", phone: "(11) 96458-6006"},
-        {start: "2026-06-29", end: "2026-07-05", name: "Herbert da Silva", phone: "(11) 98207-7437"},
-        {start: "2026-07-06", end: "2026-07-12", name: "Eric Vieira", phone: "(11) 99471-2590"},
-        {start: "2026-07-13", end: "2026-07-19", name: "Bruno Wan", phone: "(11) 96458-6006"},
-        {start: "2026-07-20", end: "2026-07-26", name: "Herbert da Silva", phone: "(11) 98207-7437"},
-        {start: "2026-07-27", end: "2026-08-02", name: "Eric Vieira", phone: "(11) 99471-2590"},
-        {start: "2026-08-03", end: "2026-08-09", name: "Bruno Wan", phone: "(11) 96458-6006"},
-        {start: "2026-08-10", end: "2026-08-16", name: "Herbert da Silva", phone: "(11) 98207-7437"},
-        {start: "2026-08-17", end: "2026-08-23", name: "Eric Vieira", phone: "(11) 99471-2590"},
-        {start: "2026-08-24", end: "2026-08-30", name: "Bruno Wan", phone: "(11) 96458-6006"},
-        {start: "2026-08-31", end: "2026-09-06", name: "Herbert da Silva", phone: "(11) 98207-7437"},
-        {start: "2026-09-07", end: "2026-09-13", name: "Eric Vieira", phone: "(11) 99471-2590"},
-        {start: "2026-09-14", end: "2026-09-20", name: "Bruno Wan", phone: "(11) 96458-6006"},
-        {start: "2026-09-21", end: "2026-09-27", name: "Herbert da Silva", phone: "(11) 98207-7437"},
-        {start: "2026-09-28", end: "2026-10-04", name: "Eric Vieira", phone: "(11) 99471-2590"},
-        {start: "2026-10-05", end: "2026-10-11", name: "Bruno Wan", phone: "(11) 96458-6006"},
-        {start: "2026-10-12", end: "2026-10-18", name: "Herbert da Silva", phone: "(11) 98207-7437"},
-        {start: "2026-10-19", end: "2026-10-25", name: "Eric Vieira", phone: "(11) 99471-2590"},
-        {start: "2026-10-26", end: "2026-11-01", name: "Bruno Wan", phone: "(11) 96458-6006"},
-        {start: "2026-11-02", end: "2026-11-08", name: "Herbert da Silva", phone: "(11) 98207-7437"},
-        {start: "2026-11-09", end: "2026-11-15", name: "Eric Vieira", phone: "(11) 99471-2590"},
-        {start: "2026-11-16", end: "2026-11-22", name: "Bruno Wan", phone: "(11) 96458-6006"},
-        {start: "2026-11-23", end: "2026-11-29", name: "Herbert da Silva", phone: "(11) 98207-7437"},
-        {start: "2026-11-30", end: "2026-12-06", name: "Eric Vieira", phone: "(11) 99471-2590"},
-        {start: "2026-12-07", end: "2026-12-13", name: "Bruno Wan", phone: "(11) 96458-6006"},
-        {start: "2026-12-14", end: "2026-12-20", name: "Herbert da Silva", phone: "(11) 98207-7437"},
-        {start: "2026-12-21", end: "2026-12-27", name: "Eric Vieira", phone: "(11) 99471-2590"},
-        {start: "2026-12-28", end: "2026-12-31", name: "Bruno Wan", phone: "(11) 96458-6006"}
+        {start: "2026-06-08", end: "2026-06-14", name: "Herbert da Silva", phone: "(11) 98207-7437"}
     ];
 
     const DADOS_SOLUTIS = [
@@ -236,120 +179,21 @@
         {start: "2026-05-04", end: "2026-05-10", name: "Pedro Felipe", phone: "(11) 96766-6330"},
         {start: "2026-05-11", end: "2026-05-17", name: "Edson Dutra", phone: "(11) 94495-8211"},
         {start: "2026-05-18", end: "2026-05-24", name: "Pedro Felipe", phone: "(11) 96766-6330"},
-        {start: "2026-05-25", end: "2026-05-31", name: "Edson Dutra", phone: "(11) 94495-8211"},
-        {start: "2026-06-01", end: "2026-06-07", name: "Pedro Felipe", phone: "(11) 96766-6330"},
-        {start: "2026-06-08", end: "2026-06-14", name: "Edson Dutra", phone: "(11) 94495-8211"},
-        {start: "2026-06-15", end: "2026-06-21", name: "Pedro Felipe", phone: "(11) 96766-6330"},
-        {start: "2026-06-22", end: "2026-06-28", name: "Edson Dutra", phone: "(11) 94495-8211"},
-        {start: "2026-06-29", end: "2026-07-05", name: "Pedro Felipe", phone: "(11) 96766-6330"},
-        {start: "2026-07-06", end: "2026-07-12", name: "Edson Dutra", phone: "(11) 94495-8211"},
-        {start: "2026-07-13", end: "2026-07-19", name: "Pedro Felipe", phone: "(11) 96766-6330"},
-        {start: "2026-07-20", end: "2026-07-26", name: "Edson Dutra", phone: "(11) 94495-8211"},
-        {start: "2026-07-27", end: "2026-08-02", name: "Pedro Felipe", phone: "(11) 96766-6330"},
-        {start: "2026-08-03", end: "2026-08-09", name: "Edson Dutra", phone: "(11) 94495-8211"},
-        {start: "2026-08-10", end: "2026-08-16", name: "Pedro Felipe", phone: "(11) 96766-6330"},
-        {start: "2026-08-17", end: "2026-08-23", name: "Edson Dutra", phone: "(11) 94495-8211"},
-        {start: "2026-08-24", end: "2026-08-30", name: "Pedro Felipe", phone: "(11) 96766-6330"},
-        {start: "2026-08-31", end: "2026-09-06", name: "Edson Dutra", phone: "(11) 94495-8211"},
-        {start: "2026-09-07", end: "2026-09-13", name: "Pedro Felipe", phone: "(11) 96766-6330"},
-        {start: "2026-09-14", end: "2026-09-20", name: "Edson Dutra", phone: "(11) 94495-8211"},
-        {start: "2026-09-21", end: "2026-09-27", name: "Pedro Felipe", phone: "(11) 96766-6330"},
-        {start: "2026-09-28", end: "2026-10-04", name: "Edson Dutra", phone: "(11) 94495-8211"},
-        {start: "2026-10-05", end: "2026-10-11", name: "Pedro Felipe", phone: "(11) 96766-6330"},
-        {start: "2026-10-12", end: "2026-10-18", name: "Edson Dutra", phone: "(11) 94495-8211"},
-        {start: "2026-10-19", end: "2026-10-25", name: "Pedro Felipe", phone: "(11) 96766-6330"},
-        {start: "2026-10-26", end: "2026-11-01", name: "Edson Dutra", phone: "(11) 94495-8211"},
-        {start: "2026-11-02", end: "2026-11-08", name: "Pedro Felipe", phone: "(11) 96766-6330"},
-        {start: "2026-11-09", end: "2026-11-15", name: "Edson Dutra", phone: "(11) 94495-8211"},
-        {start: "2026-11-16", end: "2026-11-22", name: "Pedro Felipe", phone: "(11) 96766-6330"},
-        {start: "2026-11-23", end: "2026-11-29", name: "Edson Dutra", phone: "(11) 94495-8211"},
-        {start: "2026-11-30", end: "2026-12-06", name: "Pedro Felipe", phone: "(11) 96766-6330"},
-        {start: "2026-12-07", end: "2026-12-13", name: "Edson Dutra", phone: "(11) 94495-8211"},
-        {start: "2026-12-14", end: "2026-12-20", name: "Pedro Felipe", phone: "(11) 96766-6330"},
-        {start: "2026-12-21", end: "2026-12-27", name: "Edson Dutra", phone: "(11) 94495-8211"},
-        {start: "2026-12-28", end: "2026-12-31", name: "Pedro Felipe", phone: "(11) 96766-6330"}
-    ];
-
-    const DADOS_ARQUITETURA = [
-        {name: "Erick Camargo", phone: "(11) 98447-5505"},
-        {name: "Daniel de Abreu", phone: "(11) 98284-2917"},
-        {name: "Paulo Miguel", phone: "(11) 97503-6807"},
-        {name: "Fábio Coa", phone: "(11) 97647-3220 / (11) 96366-6611"}
-    ];
-
-    const DADOS_PIX = [
-        {name: "Stefany Piemontez", phone: "(11) 97101 - 5095"},
-        {name: "Anderson Gandea Prestes", phone: "(11) 98915 - 0129"},
-        {name: "Louise Figueiredo", phone: "(11) 98663 - 8733 (De licença maternidade)"},
-        {name: "Nilson Jr", phone: "(11) 99949 - 5880"}
-    ];
-
-    const DADOS_INFRA = [
-        {section: "Servidores", items: [
-            {name: "Rogério Pippus", phone: "(11) 96253-0290"},
-            {name: "Felipe Cardozo", phone: "(11) 99540-7401"},
-            {name: "Jefferson Banzai", phone: "(11) 99561-6561"}
-        ]},
-        {section: "Banco de dados", items: [
-            {name: "Thiago Martins", phone: "(11) 96508-1775"},
-            {name: "João Tadeu", phone: "(11) 99749-1413"}
-        ]},
-        {section: "Coordenação Infra", items: [
-            {name: "Fabio Del Bono", phone: "(11) 99688-0745"}
-        ]}
+        {start: "2026-05-25", end: "2026-05-31", name: "Edson Dutra", phone: "(11) 94495-8211"}
     ];
 
     function buscar() {
         const sistema = document.getElementById('sistemaBusca').value;
         const dataInput = document.getElementById('dataBusca').value;
-        const containerData = document.getElementById('containerData');
         const resDiv = document.getElementById('resultado');
+        const resNome = document.getElementById('resNome');
+        const resTel = document.getElementById('resTel');
+        const resBadge = document.getElementById('resBadge');
+        const resExtra = document.getElementById('resExtra');
 
-        if (!sistema) {
-            containerData.style.display = "none";
-            resDiv.style.display = "none";
-            return;
-        }
+        if (!dataInput) return;
 
-        if (sistema === "ARQUITETURA" || sistema === "PIX") {
-            containerData.style.display = "none";
-            const lista = (sistema === "ARQUITETURA") ? DADOS_ARQUITETURA : DADOS_PIX;
-            const badgeClass = (sistema === "ARQUITETURA") ? "bg-arquitetura" : "bg-pix";
-            
-            let html = `<div class="info-row"><span class="label-res">Sistema</span><span class="badge ${badgeClass}">${sistema}</span></div>`;
-            lista.forEach(item => {
-                html += `<div class="list-item"><span class="label-res">Responsável</span><span class="value-res">${item.name}</span><span class="label-res" style="margin-top:5px">Telefone</span><span class="value-res" style="color:#81c784">${item.phone}</span></div>`;
-            });
-            resDiv.innerHTML = html;
-            resDiv.style.display = "block";
-            resDiv.className = "result found";
-            return;
-        }
-
-        if (sistema === "INFRA") {
-            containerData.style.display = "none";
-            let html = `<div class="info-row"><span class="label-res">Sistema</span><span class="badge bg-infra">INFRAESTRUTURA</span></div>`;
-            
-            DADOS_INFRA.forEach(grupo => {
-                html += `<div class="section-title">${grupo.section}</div>`;
-                grupo.items.forEach(item => {
-                    html += `<div class="list-item"><span class="label-res">Responsável</span><span class="value-res">${item.name}</span><span class="label-res" style="margin-top:5px">Telefone</span><span class="value-res" style="color:#81c784">${item.phone}</span></div>`;
-                });
-            });
-            
-            resDiv.innerHTML = html;
-            resDiv.style.display = "block";
-            resDiv.className = "result found";
-            return;
-        }
-
-        containerData.style.display = "block";
-        if (!dataInput) {
-            resDiv.style.display = "none";
-            return;
-        }
-
-        const baseDados = (sistema === "ROL") ? DADOS_ROL : (sistema === "BAAS" ? DADOS_BAAS : DADOS_SOLUTIS);
+        let baseDados = (sistema === "ROL") ? DADOS_ROL : (sistema === "BAAS" ? DADOS_BAAS : DADOS_SOLUTIS);
         const dataSel = new Date(dataInput + "T00:00:00");
 
         let encontrado = baseDados.find(e => {
@@ -359,19 +203,21 @@
         });
 
         if (encontrado) {
-            resDiv.innerHTML = `
-                <div class="info-row"><span class="label-res">Sistema</span><span class="badge bg-${sistema.toLowerCase()}">${sistema}</span></div>
-                <div class="info-row"><span class="label-res">Plantonista Responsável</span><span class="value-res">${encontrado.name}</span><div class="contact-methods">${sistema === "SOLUTIS" ? "Celular, WhatsApp, Teams..." : ""}</div></div>
-                <div class="info-row"><span class="label-res">Telefone / WhatsApp</span><span class="value-res" style="color: #81c784;">${encontrado.phone}</span></div>
-            `;
-            resDiv.style.display = "block";
             resDiv.className = "result found";
+            resNome.innerText = encontrado.name;
+            resTel.innerText = encontrado.phone;
+            resBadge.innerText = sistema;
+            resBadge.className = "badge bg-" + sistema.toLowerCase();
+            resExtra.innerText = (sistema === "SOLUTIS") ? "Celular, WhatsApp, Teams..." : "";
         } else {
-            resDiv.innerHTML = `<p>Escala não mapeada para esta data.</p>`;
-            resDiv.style.display = "block";
             resDiv.className = "result found";
+            resNome.innerText = "Escala não mapeada para esta data.";
+            resTel.innerText = "-";
+            resBadge.innerText = "N/A";
+            resExtra.innerText = "";
         }
     }
 </script>
+
 </body>
 </html>
