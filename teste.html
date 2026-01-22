@@ -1,0 +1,229 @@
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Buscador de Plantão 2026 - Dark Mode</title>
+    <style>
+        body { 
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
+            display: flex; 
+            justify-content: center; 
+            padding: 20px; 
+            background-color: #121212; 
+            color: #e0e0e0; 
+        }
+        
+        .card { 
+            background: #1e1e1e; 
+            padding: 25px; 
+            border-radius: 16px; 
+            box-shadow: 0 10px 25px rgba(0,0,0,0.5); 
+            width: 100%; 
+            max-width: 480px; 
+            border-top: 6px solid #37474f; 
+        }
+        
+        h2 { margin-top: 0; color: #ffffff; text-align: center; font-size: 22px; }
+        
+        .form-group { margin-bottom: 18px; }
+        
+        label { display: block; margin-bottom: 6px; font-weight: 600; font-size: 14px; color: #b0bec5; }
+        
+        select, input { 
+            width: 100%; 
+            padding: 12px; 
+            border: 2px solid #333; 
+            border-radius: 10px; 
+            font-size: 16px; 
+            box-sizing: border-box; 
+            outline: none; 
+            background: #252525; 
+            color: #ffffff;
+        }
+        
+        select:focus, input:focus { border-color: #3498db; background: #2a2a2a; }
+
+        input::-webkit-calendar-picker-indicator {
+            filter: invert(1);
+            cursor: pointer;
+        }
+        
+        .result { padding: 20px; border-radius: 12px; display: none; margin-top: 20px; animation: slideUp 0.3s ease-out; }
+        
+        .found { background-color: #252525; border: 1px solid #333; box-shadow: 0 4px 12px rgba(0,0,0,0.3); display: block; }
+        
+        .info-row { margin-bottom: 12px; border-bottom: 1px solid #333; padding-bottom: 8px; }
+        .info-row:last-child { border: none; margin-bottom: 0; }
+        
+        .label-res { font-size: 10px; text-transform: uppercase; color: #78909c; letter-spacing: 1px; font-weight: bold; }
+        .value-res { font-size: 17px; font-weight: 600; color: #ffffff; display: block; }
+        
+        .badge { display: inline-block; padding: 3px 10px; border-radius: 6px; font-size: 12px; font-weight: bold; margin-top: 4px; }
+        .bg-rol { background: #0d47a1; color: #e3f2fd; }
+        .bg-baas { background: #4a148c; color: #f3e5f5; }
+        .bg-solutis { background: #bf360c; color: #fff3e0; }
+        
+        .contact-methods { font-size: 11px; color: #81c784; font-weight: 500; margin-top: 4px; }
+        
+        @keyframes slideUp { from { opacity: 0; transform: translateY(15px); } to { opacity: 1; transform: translateY(0); } }
+    </style>
+</head>
+<body>
+
+<div class="card">
+    <h2>Consulta de Plantonista</h2>
+    
+    <div class="form-group">
+        <label>Selecione o Sistema:</label>
+        <select id="sistemaBusca" onchange="buscar()">
+            <option value="ROL">ROL</option>
+            <option value="BAAS">BAAS</option>
+            <option value="SOLUTIS">SOLUTIS</option>
+        </select>
+    </div>
+
+    <div class="form-group">
+        <label>Escolha a Data:</label>
+        <input type="date" id="dataBusca" onchange="buscar()" />
+    </div>
+
+    <div id="resultado" class="result">
+        <div class="info-row">
+            <span class="label-res">Sistema</span>
+            <span id="resBadge" class="badge"></span>
+        </div>
+        <div class="info-row">
+            <span class="label-res">Plantonista Responsável</span>
+            <span id="resNome" class="value-res"></span>
+            <div id="resExtra" class="contact-methods"></div>
+        </div>
+        <div class="info-row">
+            <span class="label-res">Telefone / WhatsApp</span>
+            <span id="resTel" class="value-res" style="color: #81c784;"></span>
+        </div>
+    </div>
+</div>
+
+<script>
+    const DADOS_ROL = [
+        {start: "2026-01-19", end: "2026-01-25", name: "Gustavo Patricio Silva", phone: "(11) 94265-1594"},
+        {start: "2026-01-26", end: "2026-02-01", name: "Kely Caroline", phone: "(11) 97750-3747"},
+        {start: "2026-02-02", end: "2026-02-08", name: "Gustavo Patricio Silva", phone: "(11) 94265-1594"},
+        {start: "2026-02-09", end: "2026-02-15", name: "Kely Caroline", phone: "(11) 97750-3747"},
+        {start: "2026-02-16", end: "2026-02-22", name: "Gustavo Patricio Silva", phone: "(11) 94265-1594"},
+        {start: "2026-02-23", end: "2026-03-01", name: "Kely Caroline", phone: "(11) 97750-3747"},
+        {start: "2026-03-02", end: "2026-03-08", name: "Gustavo Patricio Silva", phone: "(11) 94265-1594"},
+        {start: "2026-03-09", end: "2026-03-15", name: "Kely Caroline", phone: "(11) 97750-3747"},
+        {start: "2026-03-16", end: "2026-03-22", name: "Gustavo Patricio Silva", phone: "(11) 94265-1594"},
+        {start: "2026-03-23", end: "2026-03-29", name: "Kely Caroline", phone: "(11) 97750-3747"},
+        {start: "2026-03-30", end: "2026-04-05", name: "Gustavo Patricio Silva", phone: "(11) 94265-1594"},
+        {start: "2026-04-06", end: "2026-04-12", name: "Kely Caroline", phone: "(11) 97750-3747"},
+        {start: "2026-04-13", end: "2026-04-19", name: "Gustavo Patricio Silva", phone: "(11) 94265-1594"},
+        {start: "2026-04-20", end: "2026-04-26", name: "Kely Caroline", phone: "(11) 97750-3747"},
+        {start: "2026-04-27", end: "2026-05-03", name: "Gustavo Patricio Silva", phone: "(11) 94265-1594"},
+        {start: "2026-05-04", end: "2026-05-10", name: "Kely Caroline", phone: "(11) 97750-3747"},
+        {start: "2026-05-11", end: "2026-05-17", name: "Gustavo Patricio Silva", phone: "(11) 94265-1594"},
+        {start: "2026-05-18", end: "2026-05-24", name: "Kely Caroline", phone: "(11) 97750-3747"},
+        {start: "2026-05-25", end: "2026-05-31", name: "Gustavo Patricio Silva", phone: "(11) 94265-1594"},
+        {start: "2026-06-01", end: "2026-06-07", name: "Kely Caroline", phone: "(11) 97750-3747"}
+    ];
+
+    const DADOS_BAAS = [
+        {start: "2026-01-01", end: "2026-01-04", name: "Eric Vieira", phone: "(11) 99471-2590"},
+        {start: "2026-01-05", end: "2026-01-11", name: "Bruno Wan", phone: "(11) 96458-6006"},
+        {start: "2026-01-12", end: "2026-01-18", name: "Herbert da Silva", phone: "(11) 98207-7437"},
+        {start: "2026-01-19", end: "2026-01-25", name: "Eric Vieira", phone: "(11) 99471-2590"},
+        {start: "2026-01-26", end: "2026-02-01", name: "Bruno Wan", phone: "(11) 96458-6006"},
+        {start: "2026-02-02", end: "2026-02-08", name: "Herbert da Silva", phone: "(11) 98207-7437"},
+        {start: "2026-02-09", end: "2026-02-15", name: "Eric Vieira", phone: "(11) 99471-2590"},
+        {start: "2026-02-16", end: "2026-02-22", name: "Bruno Wan", phone: "(11) 96458-6006"},
+        {start: "2026-02-23", end: "2026-03-01", name: "Herbert da Silva", phone: "(11) 98207-7437"},
+        {start: "2026-03-02", end: "2026-03-08", name: "Eric Vieira", phone: "(11) 99471-2590"},
+        {start: "2026-03-09", end: "2026-03-15", name: "Bruno Wan", phone: "(11) 96458-6006"},
+        {start: "2026-03-16", end: "2026-03-22", name: "Herbert da Silva", phone: "(11) 98207-7437"},
+        {start: "2026-03-23", end: "2026-03-29", name: "Eric Vieira", phone: "(11) 99471-2590"},
+        {start: "2026-03-30", end: "2026-04-05", name: "Bruno Wan", phone: "(11) 96458-6006"},
+        {start: "2026-04-06", end: "2026-04-12", name: "Herbert da Silva", phone: "(11) 98207-7437"},
+        {start: "2026-04-13", end: "2026-04-19", name: "Eric Vieira", phone: "(11) 99471-2590"},
+        {start: "2026-04-20", end: "2026-04-26", name: "Bruno Wan", phone: "(11) 96458-6006"},
+        {start: "2026-04-27", end: "2026-05-03", name: "Herbert da Silva", phone: "(11) 98207-7437"},
+        {start: "2026-05-04", end: "2026-05-10", name: "Eric Vieira", phone: "(11) 99471-2590"},
+        {start: "2026-05-11", end: "2026-05-17", name: "Bruno Wan", phone: "(11) 96458-6006"},
+        {start: "2026-05-18", end: "2026-05-24", name: "Herbert da Silva", phone: "(11) 98207-7437"},
+        {start: "2026-05-25", end: "2026-05-31", name: "Eric Vieira", phone: "(11) 99471-2590"},
+        {start: "2026-06-01", end: "2026-06-07", name: "Bruno Wan", phone: "(11) 96458-6006"},
+        {start: "2026-06-08", end: "2026-06-14", name: "Herbert da Silva", phone: "(11) 98207-7437"}
+    ];
+
+    const DADOS_SOLUTIS = [
+        {start: "2026-01-01", end: "2026-01-04", name: "Pedro Felipe", phone: "(11) 96766-6330"},
+        {start: "2026-01-05", end: "2026-01-11", name: "Edson Dutra", phone: "(11) 94495-8211"},
+        {start: "2026-01-12", end: "2026-01-18", name: "Pedro Felipe", phone: "(11) 96766-6330"},
+        {start: "2026-01-19", end: "2026-01-25", name: "Edson Dutra", phone: "(11) 94495-8211"},
+        {start: "2026-01-26", end: "2026-02-01", name: "Pedro Felipe", phone: "(11) 96766-6330"},
+        {start: "2026-02-02", end: "2026-02-08", name: "Edson Dutra", phone: "(11) 94495-8211"},
+        {start: "2026-02-09", end: "2026-02-15", name: "Pedro Felipe", phone: "(11) 96766-6330"},
+        {start: "2026-02-16", end: "2026-02-22", name: "Edson Dutra", phone: "(11) 94495-8211"},
+        {start: "2026-02-23", end: "2026-03-01", name: "Pedro Felipe", phone: "(11) 96766-6330"},
+        {start: "2026-03-02", end: "2026-03-08", name: "Edson Dutra", phone: "(11) 94495-8211"},
+        {start: "2026-03-09", end: "2026-03-15", name: "Pedro Felipe", phone: "(11) 96766-6330"},
+        {start: "2026-03-16", end: "2026-03-22", name: "Edson Dutra", phone: "(11) 94495-8211"},
+        {start: "2026-03-23", end: "2026-03-29", name: "Pedro Felipe", phone: "(11) 96766-6330"},
+        {start: "2026-03-30", end: "2026-04-05", name: "Edson Dutra", phone: "(11) 94495-8211"},
+        {start: "2026-04-06", end: "2026-04-12", name: "Pedro Felipe", phone: "(11) 96766-6330"},
+        {start: "2026-04-13", end: "2026-04-19", name: "Edson Dutra", phone: "(11) 94495-8211"},
+        {start: "2026-04-20", end: "2026-04-26", name: "Pedro Felipe", phone: "(11) 96766-6330"},
+        {start: "2026-04-27", end: "2026-05-03", name: "Edson Dutra", phone: "(11) 94495-8211"},
+        {start: "2026-05-04", end: "2026-05-10", name: "Pedro Felipe", phone: "(11) 96766-6330"},
+        {start: "2026-05-11", end: "2026-05-17", name: "Edson Dutra", phone: "(11) 94495-8211"},
+        {start: "2026-05-18", end: "2026-05-24", name: "Pedro Felipe", phone: "(11) 96766-6330"},
+        {start: "2026-05-25", end: "2026-05-31", name: "Edson Dutra", phone: "(11) 94495-8211"}
+    ];
+
+    function buscar() {
+        const sistema = document.getElementById('sistemaBusca').value;
+        const dataInput = document.getElementById('dataBusca').value;
+        const resDiv = document.getElementById('resultado');
+        const resNome = document.getElementById('resNome');
+        const resTel = document.getElementById('resTel');
+        const resBadge = document.getElementById('resBadge');
+        const resExtra = document.getElementById('resExtra');
+
+        if (!dataInput) return;
+
+        let baseDados = (sistema === "ROL") ? DADOS_ROL : (sistema === "BAAS" ? DADOS_BAAS : DADOS_SOLUTIS);
+        const dataSel = new Date(dataInput + "T00:00:00");
+
+        let encontrado = baseDados.find(e => {
+            let dInicio = new Date(e.start + "T00:00:00");
+            let dFim = e.end ? new Date(e.end + "T23:59:59") : new Date(e.start + "T23:59:59");
+            return dataSel >= dInicio && dataSel <= dFim;
+        });
+
+        if (encontrado) {
+            resDiv.className = "result found";
+            resNome.innerText = encontrado.name;
+            resTel.innerText = encontrado.phone;
+            resBadge.innerText = sistema;
+            resBadge.className = "badge bg-" + sistema.toLowerCase();
+            resExtra.innerText = (sistema === "SOLUTIS") ? "Celular, WhatsApp, Teams..." : "";
+        } else {
+            resDiv.className = "result found";
+            resNome.innerText = "Escala não mapeada para esta data.";
+            resTel.innerText = "-";
+            resBadge.innerText = "N/A";
+            resExtra.innerText = "";
+        }
+    }
+</script>
+
+</body>
+</html>
+
+
+      
+    </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/anchor-js/4.1.0/anchor.min.js" integrity="sha256-lZaRhKri35AyJSypXXs4o6OPFTbTmUoltBbDCbdzegg=" crossorigin="anonymous"></script>
+    <script>anchors.add();</script>
+  </body>
+</html>
